@@ -1,0 +1,7 @@
+flavor = "development"
+appIdSuffix= ""
+appName = "Celestial Lingo"
+
+apiKey = ""
+threadId = ""
+assistantId = ""
