@@ -5,6 +5,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import '../../providers/message_provider.dart';
 import 'input_box.dart';
 import 'message_box.dart';
+import 'support_window.dart';
 
 class ChatRoomPage extends HookConsumerWidget {
   const ChatRoomPage({super.key});
@@ -27,23 +28,31 @@ class ChatRoomPage extends HookConsumerWidget {
             ),
           ],
         ),
-        body: Column(
-          mainAxisAlignment: MainAxisAlignment.end,
+        body: Row(
           children: [
             Expanded(
-              child: switch (messageListAsync) {
-                AsyncError(:final error) => Text(error.toString()),
-                AsyncData(:final value) => ListView.builder(
-                    physics: const ClampingScrollPhysics(),
-                    reverse: true,
-                    itemBuilder: (context, index) =>
-                        value.reversed.map(MessageBox.new).toList()[index],
-                    itemCount: value.length,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  Expanded(
+                    child: switch (messageListAsync) {
+                      AsyncError(:final error) => Text(error.toString()),
+                      AsyncData(:final value) => ListView.builder(
+                          physics: const ClampingScrollPhysics(),
+                          reverse: true,
+                          itemBuilder: (context, index) => value.reversed
+                              .map(MessageBox.new)
+                              .toList()[index],
+                          itemCount: value.length,
+                        ),
+                      _ => const SizedBox(),
+                    },
                   ),
-                _ => const SizedBox(),
-              },
+                  const InputBox(),
+                ],
+              ),
             ),
-            const InputBox(),
+            const TranslateWindow(),
           ],
         ),
       ),

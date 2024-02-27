@@ -48,7 +48,8 @@ class OpenAIChatService implements AbstractChatService {
     );
 
     if (response.statusCode == 200) {
-      final responseData = jsonDecode(response.body) as Map<String, dynamic>;
+      final responseData =
+          jsonDecode(utf8.decode(response.bodyBytes)) as Map<String, dynamic>;
       final messages = responseData['data'] as List;
       return messages
           .map(
@@ -99,8 +100,8 @@ class OpenAIChatService implements AbstractChatService {
     );
 
     if (response.statusCode == 200) {
-      return (jsonDecode(response.body) as Map<String, dynamic>)['id']
-          as String;
+      return (jsonDecode(utf8.decode(response.bodyBytes))
+          as Map<String, dynamic>)['id'] as String;
     }
     // TODO(char574): エラー処理
     throw Exception('Failed to create a assistant: ${response.body}');
@@ -114,8 +115,8 @@ class OpenAIChatService implements AbstractChatService {
     );
 
     if (response.statusCode == 200) {
-      return (jsonDecode(response.body) as Map<String, dynamic>)['id']
-          as String;
+      return (jsonDecode(utf8.decode(response.bodyBytes))
+          as Map<String, dynamic>)['id'] as String;
     }
     // TODO(char574): エラー処理
     throw Exception('Failed to create a thread: ${response.statusCode}');
@@ -150,8 +151,8 @@ class OpenAIChatService implements AbstractChatService {
     );
 
     if (response.statusCode == 200) {
-      return (jsonDecode(response.body) as Map<String, dynamic>)['id']
-          as String;
+      return (jsonDecode(utf8.decode(response.bodyBytes))
+          as Map<String, dynamic>)['id'] as String;
     }
     // TODO(char574): エラー処理
     throw Exception('Failed to run the assistant: ${response.body}');
@@ -165,7 +166,8 @@ class OpenAIChatService implements AbstractChatService {
     );
 
     if (response.statusCode == 200) {
-      return (jsonDecode(response.body) as Map<String, dynamic>)['status'] ==
+      return (jsonDecode(utf8.decode(response.bodyBytes))
+              as Map<String, dynamic>)['status'] ==
           'completed';
     }
     // TODO(char574): エラー処理
